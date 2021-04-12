@@ -37,6 +37,8 @@ My qmk keymap for Lily58 split keyboard made on top of [qmk keyboard firmware](h
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
+ ```
+ 
 ---
 
 ## Prerequisites
