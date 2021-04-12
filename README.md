@@ -1,7 +1,6 @@
 # My lily58_keymap
 My qmk keymap for Lily58 split keyboard made on top of [qmk keyboard firmware](https://github.com/qmk/qmk_firmware), that runs on ATmega32u4 Pro Micro board.
 
----
 ## Keymap
 ![lily image](lily58.jpeg)
 
@@ -38,14 +37,11 @@ My qmk keymap for Lily58 split keyboard made on top of [qmk keyboard firmware](h
  *                   `----------------------------'           '------''--------------------'
  */
  ```
- 
----
 
 ## Prerequisites
 To be able to compile and flash firmware you will need:
 - qmk ([documentation](https://docs.qmk.fm/#/newbs_getting_started))
 
----
 
 ## Installation
 Assuming that you have qmk firmware installed, to install my lily58 keymap:
@@ -59,4 +55,3 @@ Assuming that you have qmk firmware installed, to install my lily58 keymap:
 - [ ] Add more than two layers,
 - [ ] Add OLED screens,
 - [ ] Write a daemon that updates OLED with information about pc resources,
-- [ ] 
