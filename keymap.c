@@ -1,5 +1,16 @@
 #include QMK_KEYBOARD_H
 
+/*
+#ifdef PROTOCOL_LUFA
+  #include "lufa.h"
+  #include "split_util.h"
+#endif
+*/
+
+#ifdef SSD1306OLED
+	#include "ssd1306.h"
+#endif
+
 enum layer_number {
   _QWERTY = 0,
   _LOWER,
@@ -101,12 +112,63 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+/*
+#ifdef OLED_DRIVER_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (is_keyboard_master()) {
+        return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+    }
+
+    return rotation;
+}
+
+void oled_task_user(void) {
+    if (!is_keyboard_master()) {
+        render_logo();  // Renders a static logo
+        //render_status();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+    } else {
+        render_logo();  // Renders a static logo
+        oled_scroll_left();  // Turns on scrolling
+    }
+}
+#endif
+*/
+/*
+#ifdef OLED_DRIVER_ENABLE
+void oled_task_user(void) {
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
+            oled_write_P(PSTR("Default\n"), false);
+            break;
+        case _LOWER:
+            oled_write_P(PSTR("FN\n"), false);
+            break;
+        case _RAISE:
+            oled_write_P(PSTR("ADJ\n"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
+
+    // Host Keyboard LED Status
+    led_t led_state = host_keyboard_led_state();
+    oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+    oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+}
+#endif
+*/
+
 //SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
 #ifdef OLED_DRIVER_ENABLE
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+  if (is_keyboard_master())
+    return OLED_ROTATION_0;  // flips the display 180 degrees if offhand
   return rotation;
 }
 
@@ -119,15 +181,15 @@ const char *read_keylogs(void);
 
 // const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
-// void set_timelog(void);
+ //void set_timelog(void);
 // const char *read_timelog(void);
 
 void oled_task_user(void) {
-  if (is_keyboard_master()) {
+  if (!is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
-    oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
+	oled_write_ln(read_layer_state(), false);
+	oled_write_ln(read_keylog(), false);
+	oled_write_ln(read_keylogs(), false);
     //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
     //oled_write_ln(read_host_led_state(), false);
     //oled_write_ln(read_timelog(), false);
@@ -142,7 +204,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_DRIVER_ENABLE
     set_keylog(keycode, record);
 #endif
-    // set_timelog();
+    //set_timelog();
   }
   return true;
 }
