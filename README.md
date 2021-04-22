@@ -52,6 +52,6 @@ Assuming that you have qmk firmware installed, to install my lily58 keymap:
 
 ## To-do
 - [X] Program Rotary encoders,
-- [ ] Add more than two layers,
-- [ ] Add OLED screens,
+- [X] Add more than two layers,
+- [X] Add OLED screens,
 - [ ] Write a daemon that updates OLED with information about pc resources,
